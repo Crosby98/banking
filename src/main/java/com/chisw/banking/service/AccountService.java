@@ -1,11 +1,13 @@
 package com.chisw.banking.service;
 
+import com.chisw.banking.domain.Account;
 import com.chisw.banking.domain.Operation;
 import com.chisw.banking.domain.OperationStatus;
 import com.chisw.banking.domain.User;
 import com.chisw.banking.repository.UserRepository;
 import com.chisw.banking.service.dto.OperationDto;
 import com.chisw.banking.service.mapper.OperationMapper;
+import com.chisw.banking.web.rest.errors.EmailNotFoundException;
 import com.chisw.banking.web.rest.errors.OperationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,15 +25,15 @@ public class AccountService {
     private final UserRepository userRepository;
 
     public void depositMoneyIntoTheAccount(String email, OperationDto operationDto) {
-            Optional<User> oneByEmailIgnoreCase = userRepository.findOneByEmailIgnoreCase(email.toLowerCase());
-            oneByEmailIgnoreCase.ifPresent(user -> performDeposit(user, operationDto));
+        Optional<User> oneByEmailIgnoreCase = userRepository.findOneByEmailIgnoreCase(email.toLowerCase());
+        oneByEmailIgnoreCase.ifPresent(user -> performDeposit(user, operationDto));
     }
 
     public void withdrawMoneyFromAccount(String email, OperationDto operationDto) {
-            Optional<User> oneByEmailIgnoreCase = userRepository.findOneByEmailIgnoreCase(email.toLowerCase());
-            oneByEmailIgnoreCase.ifPresent(
+        Optional<User> oneByEmailIgnoreCase = userRepository.findOneByEmailIgnoreCase(email.toLowerCase());
+        oneByEmailIgnoreCase.ifPresent(
                 user -> performWithdraw(user, operationDto)
-            );
+        );
     }
 
     private void performDeposit(User user, OperationDto operationDto) {
@@ -67,6 +69,15 @@ public class AccountService {
             user.getAccount().getAccountOperations().add(operation);
             userRepository.save(user);
             throw new OperationException("Can't withdraw money, you don't have enough money for withdraw", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public Account getUserAccountByEmail(String email) {
+        Optional<User> user = userRepository.findOneByEmailIgnoreCase(email);
+        if (user.isPresent()) {
+            return user.get().getAccount();
+        } else {
+            throw new EmailNotFoundException("User with email: " + email + "not found", HttpStatus.OK);
         }
     }
 }

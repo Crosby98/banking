@@ -36,4 +36,20 @@ public class Operation implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "balance", nullable = false)
     private OperationStatus status;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Operation)) {
+            return false;
+        }
+        return id != null && id.equals(((Operation) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

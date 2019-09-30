@@ -46,7 +46,7 @@ public abstract class AbstractTest {
         Account account = new Account();
         account.setBalance(0.0);
         account.setStatus(Status.ACTIVE);
-        account.setCreate_date(new Date());
+        account.setCreateDate(new Date());
         account.setAccountOperations(new ArrayList<>());
         return account;
     }

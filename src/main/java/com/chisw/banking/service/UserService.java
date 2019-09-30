@@ -6,11 +6,9 @@ import com.chisw.banking.domain.User;
 import com.chisw.banking.repository.UserRepository;
 import com.chisw.banking.service.dto.UserDTO;
 import com.chisw.banking.web.rest.errors.EmailAlreadyUsedException;
-import com.chisw.banking.web.rest.errors.EmailNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,17 +39,8 @@ public class UserService {
         newUser.setPhone(userDTO.getPhone());
         newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setStatus(Status.ACTIVE.getValue());
-        newUser.setAccount(new Account().createNewAccount());
+        newUser.setAccount(Account.createNewActiveAccount());
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
-    }
-
-    public Account getUserAccountBalanceByEmail(String email) {
-        Optional<User> user = userRepository.findOneByEmailIgnoreCase(email);
-        if (user.isPresent()) {
-            return user.get().getAccount();
-        } else {
-            throw new EmailNotFoundException("User with email: " + email + "not found", HttpStatus.OK);
-        }
     }
 }

@@ -33,17 +33,33 @@ public class Account implements Serializable {
     @JoinColumn(name = "operations_id", foreignKey = @ForeignKey(name = "fk_banking_operations"))
     private List<Operation> accountOperations = new ArrayList<>();
 
-    @Column(name = "create_date", nullable = false)
-    private Date create_date;
+    @Column(name = "createDate", nullable = false)
+    private Date createDate;
 
     @Column(name = "status")
     @Enumerated
     private Status status;
 
-    public Account createNewAccount() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Account)) {
+            return false;
+        }
+        return id != null && id.equals(((Account) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    public static Account createNewActiveAccount() {
         Account account = new Account();
         account.setBalance(0.0);
-        account.setCreate_date(new Date());
+        account.setCreateDate(new Date());
         account.setStatus(Status.ACTIVE);
         return account;
     }

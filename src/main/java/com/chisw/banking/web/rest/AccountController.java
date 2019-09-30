@@ -1,5 +1,6 @@
 package com.chisw.banking.web.rest;
 
+import com.chisw.banking.domain.Account;
 import com.chisw.banking.security.SecurityUtils;
 import com.chisw.banking.service.AccountService;
 import com.chisw.banking.service.dto.OperationDto;
@@ -29,5 +30,11 @@ public class AccountController {
         Optional<String> email = SecurityUtils.getCurrentUserLogin();
         email.ifPresent(e -> accountService.withdrawMoneyFromAccount(e, operationDto));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/accounts/{email}")
+    public ResponseEntity<Account> getUserAccountByEmail(@PathVariable String email) {
+        Account account = accountService.getUserAccountByEmail(email);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 }

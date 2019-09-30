@@ -43,18 +43,4 @@ public class UserMapper {
             return user;
         }
     }
-
-//    public UserDTO userToUserDTO(User user) {
-//        if (user == null) {
-//            return null;
-//        } else {
-//            UserDTO userDTO = new UserDTO();
-//            userDTO.setId(userDTO.getId());
-//            userDTO.setFirstName(userDTO.getFirstName());
-//            userDTO.setSurName(userDTO.getSurName());
-//            userDTO.setEmail(userDTO.getEmail());
-//            userDTO.setPhone(userDTO.getPhone());
-//            userDTO.setStatus(userDTO.getStatus());
-//            return userDTO;
-//        }
 }

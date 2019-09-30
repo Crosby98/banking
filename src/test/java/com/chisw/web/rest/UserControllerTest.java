@@ -45,8 +45,8 @@ public class UserControllerTest extends AbstractTest {
         String contentJson = createJsonFromObject(userDto);
 
         mockMvc.perform(post("/api/users/register")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(contentJson))
-            .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(contentJson))
+                .andExpect(status().isOk());
     }
 }

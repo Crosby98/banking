@@ -5,7 +5,6 @@ import com.chisw.banking.domain.User;
 import com.chisw.banking.repository.UserRepository;
 import com.chisw.banking.service.UserService;
 import com.chisw.banking.service.dto.UserDTO;
-import com.chisw.banking.service.mapper.UserMapper;
 import com.chisw.banking.web.rest.errors.EmailAlreadyUsedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,19 +55,6 @@ public class UserServiceTest extends AbstractTest {
 
         verify(userRepository, times(0)).save(any(User.class));
         verify(passwordEncoder, times(0)).encode(any(String.class));
-        verify(userRepository, times(1)).findOneByEmailIgnoreCase(any(String.class));
-    }
-
-    @Test
-    public void shouldReturnAccountInfo() {
-        String email = "chisw@mail.ru";
-
-        User user = createUser();
-
-        when(userRepository.findOneByEmailIgnoreCase(email)).thenReturn(Optional.of(user));
-
-        userService.getUserAccountBalanceByEmail(email);
-
         verify(userRepository, times(1)).findOneByEmailIgnoreCase(any(String.class));
     }
 }
