@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="banking_0000" author="igorl" dbms="postgresql">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS BANKING
+        </sql>
+    </changeSet>
+
+    <changeSet id="banking_0001" author="igorl">
+        <createSequence sequenceName="SEQ_USER"/>
+    </changeSet>
+
+    <changeSet id="banking_0002" author="igorl">
+        <createSequence  schemaName="BANKING" sequenceName="SEQ_OPERATION"/>
+    </changeSet>
+
+    <changeSet id="banking_0003" author="igorl">
+        <createSequence  schemaName="BANKING" sequenceName="SEQ_ACCOUNT"/>
+    </changeSet>
+
+    <changeSet id="banking_0004" author="igorl" dbms="postgresql">
+        <createTable tableName="OPERATIONS" schemaName="BANKING">
+            <column name="ID" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="OPERATION" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTION_WITH_BALANCE" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OPERATION_INFO" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="banking_0005" author="igorl" dbms="postgresql">
+        <createTable tableName="ACCOUNT" schemaName="BANKING">
+            <column name="ID" type="numeric">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="BALANCE" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OPERATIONS_ID" type="bigint">
+                <constraints foreignKeyName="fk_banking_operations"
+                             referencedTableName="OPERATIONS"
+                             referencedTableSchemaName="BANKING"
+                             references="banking.operations(id)"/>
+            </column>
+            <column name="CREATE_DATE" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="varchar(30)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="banking_0006" author="igorl" dbms="postgresql">
+        <createTable tableName="USERS" schemaName="BANKING">
+            <column name="ID" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="FIRST_NAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SURNAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHONE" type="varchar(50)">
+                <constraints unique="true"/>
+            </column>
+            <column name="EMAIL" type="varchar(254)">
+                <constraints nullable="false"
+                             unique="true"/>
+            </column>
+            <column name="ACCOUNT_ID" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_banking_account"
+                             referencedTableSchemaName="BANKING"
+                             references="banking.account(id)"/>/>
+            </column>
+            <column name="STATUS" type="varchar(30)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

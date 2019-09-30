@@ -1,0 +1,22 @@
+logging:
+  level:
+    ROOT: INFO
+    com.chisw.banking: INFO
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${JDBC_URL:jdbc:postgresql://localhost:5432/banking?currentSchema=banking}
+    username: banking_user
+    password: YLweX9QoDWHVRkzpMGndGBqm
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  liquibase:
+    enabled: true
+    change-log: classpath:config/liquibase/db.changelog-master.xml
+
+server:
+  port: 8080

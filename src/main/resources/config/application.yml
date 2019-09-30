@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: banking
+
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true

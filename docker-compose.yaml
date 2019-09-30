@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  banking:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: crosby98/banking
+    container_name: banking
+    environment:
+      - JDBC_URL=jdbc:postgresql://banking_postgres:5432/banking
+    ports:
+      - "9001:9001"
+    depends_on:
+      - banking_postgres
+    links:
+      - banking_postgres
+
+  banking_postgres:
+    image: "postgres:latest"
+    container_name: banking_postgres
+    environment:
+      - POSTGRES_DB=banking
+      - POSTGRES_USER=banking_user
+      - POSTGRES_PASSWORD=YLweX9QoDWHVRkzpMGndGBqm
+    ports:
+      - 5432:5432
+    volumes:
+      - banking_dbdata:/var/lib/postgresql/data
+volumes:
+  banking_dbdata:
