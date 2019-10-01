@@ -9,7 +9,7 @@ services:
     environment:
       - JDBC_URL=jdbc:postgresql://banking_postgres:5432/banking
     ports:
-      - "9001:9001"
+      - 8080:8080
     depends_on:
       - banking_postgres
     links:
