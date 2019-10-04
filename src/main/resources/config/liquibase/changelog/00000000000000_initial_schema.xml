@@ -11,7 +11,7 @@
     </changeSet>
 
     <changeSet id="banking_0001" author="igorl">
-        <createSequence sequenceName="SEQ_USER"/>
+        <createSequence schemaName="BANKING" sequenceName="SEQ_USER"/>
     </changeSet>
 
     <changeSet id="banking_0002" author="igorl">

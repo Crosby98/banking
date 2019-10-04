@@ -7,7 +7,7 @@ services:
     image: crosby98/banking
     container_name: banking
     environment:
-      - JDBC_URL=jdbc:postgresql://banking_postgres:5432/banking
+      - JDBC_URL=jdbc:postgresql://banking_postgres:5432/banking?currentSchema=banking
     ports:
       - 8080:8080
     depends_on:
@@ -16,7 +16,7 @@ services:
       - banking_postgres
 
   banking_postgres:
-    image: "postgres:latest"
+    image: postgres:latest
     container_name: banking_postgres
     environment:
       - POSTGRES_DB=banking
@@ -24,7 +24,3 @@ services:
       - POSTGRES_PASSWORD=YLweX9QoDWHVRkzpMGndGBqm
     ports:
       - 5432:5432
-    volumes:
-      - banking_dbdata:/var/lib/postgresql/data
-volumes:
-  banking_dbdata:

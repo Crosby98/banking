@@ -16,7 +16,7 @@ public class Operation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OPERATION")
-    @SequenceGenerator(name = "seq_user", sequenceName = "SEQ_OPERATION", schema = "BANKING", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "seq_operation", sequenceName = "SEQ_OPERATION", schema = "BANKING", initialValue = 1, allocationSize = 1)
     private Long id;
 
     @Column(name = "operation", nullable = false)

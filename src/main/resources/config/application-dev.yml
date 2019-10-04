@@ -15,6 +15,7 @@ spring:
       poolName: Hikari
       auto-commit: false
   liquibase:
+    default-schema: public
     enabled: true
     change-log: classpath:config/liquibase/db.changelog-master.xml
 
